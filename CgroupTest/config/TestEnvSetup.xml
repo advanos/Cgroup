@@ -1,0 +1,12 @@
+<?xml version="1.0"? Encoding="UTF-8"?>
+
+<!-- File Name: TestEnvSetup.xml -->
+
+<TestRun>
+    <TestCase>
+        <Summary>检查操作系统能否安装ldtp成功</Summary>
+        <Dir>TestEnvSetup.xml</Dir>
+        <Script>TestEnvSetup_01.sh</Script>
+        <CaseRun>True</CaseRun>
+    </TestCase>
+</TestRun>

@@ -1,0 +1,66 @@
+<?xml version="1.0"? Encoding="UTF-8"?>
+
+<!-- File Name: TestGroup.xml -->
+
+<TestRun>
+    <TestGroup>
+        <GroupName>Install</GroupName>
+        <Component>01安装</Component>
+        <GroupRun>False</GroupRun>
+        <GroupAll>False</GroupAll>
+    </TestGroup>
+    <TestGroup>
+        <GroupName>SystemCore</GroupName>
+        <Component>02系统核心功能</Component>
+        <GroupRun>False</GroupRun>
+        <GroupAll>False</GroupAll>
+    </TestGroup>
+    <TestGroup>
+        <GroupName>TestEnvSetup</GroupName>
+        <Component>测试环境配置</Component>
+        <GroupRun>False</GroupRun>
+        <GroupAll>False</GroupAll>
+    </TestGroup>
+    <TestGroup>
+        <GroupName>SystemAdmin</GroupName>
+        <Component>03系统管理工具</Component>
+        <GroupRun>False</GroupRun>
+        <GroupAll>False</GroupAll>
+    </TestGroup>
+    <TestGroup>
+        <GroupName>SystemAdminMenu</GroupName>
+        <Component>03系统管理工具</Component>
+        <GroupRun>True</GroupRun>
+        <GroupAll>False</GroupAll>
+    </TestGroup>
+    <TestGroup>
+        <GroupName>Services</GroupName>
+        <Component>04系统服务</Component>
+        <GroupRun>False</GroupRun>
+        <GroupAll>False</GroupAll>
+    </TestGroup>
+    <TestGroup>
+        <GroupName>Application</GroupName>
+        <Component>05应用程序</Component>
+        <GroupRun>False</GroupRun>
+        <GroupAll>False</GroupAll>
+    </TestGroup>
+    <TestGroup>
+        <GroupName>ApplicationMenu</GroupName>
+        <Component>05应用程序</Component>
+        <GroupRun>True</GroupRun>
+        <GroupAll>False</GroupAll>
+    </TestGroup>
+    <TestGroup>
+        <GroupName>FsCompatibility</GroupName>
+        <Component>06文件系统兼容性</Component>
+        <GroupRun>False</GroupRun>
+        <GroupAll>False</GroupAll>
+    </TestGroup>
+    <TestGroup>
+        <GroupName>Desktop</GroupName>
+        <Component>07桌面环境功能</Component>
+        <GroupRun>True</GroupRun>
+        <GroupAll>False</GroupAll>
+    </TestGroup>
+</TestRun>

@@ -1,0 +1,42 @@
+<?xml version="1.0"? Encoding="UTF-8"?>
+
+<!-- File Name: Desktop.xml -->
+
+<TestRun>
+    <TestCase>
+        <Summary>检查操作系统面板是否成功启动</Summary>
+        <Dir>Desktop</Dir>
+        <Script>Desktop_01.sh</Script>
+        <CaseRun>True</CaseRun>
+    </TestCase>
+    <TestCase>
+        <Summary>检查操作系统面板是否包含启动按钮</Summary>
+        <Dir>Desktop</Dir>
+        <Script>Desktop_02.sh</Script>
+        <CaseRun>True</CaseRun>
+    </TestCase>
+    <TestCase>
+        <Summary>检查操作系统面板是否包含快速启动栏</Summary>
+        <Dir>Desktop</Dir>
+        <Script>Desktop_03.sh</Script>
+        <CaseRun>True</CaseRun>
+    </TestCase>
+    <TestCase>
+        <Summary>检查操作系统桌面上是否提供计算机图标</Summary>
+        <Dir>Desktop</Dir>
+        <Script>Desktop_04.sh</Script>
+        <CaseRun>True</CaseRun>
+    </TestCase>
+    <TestCase>
+        <Summary>检查操作系统桌面上是否提供用户主文件夹图标</Summary>
+        <Dir>Desktop</Dir>
+        <Script>Desktop_05.sh</Script>
+        <CaseRun>True</CaseRun>
+    </TestCase>
+    <TestCase>
+        <Summary>检查操作系统桌面上是否提供回收站图标</Summary>
+        <Dir>Desktop</Dir>
+        <Script>Desktop_06.sh</Script>
+        <CaseRun>True</CaseRun>
+    </TestCase>
+</TestRun>

@@ -1,0 +1,13 @@
+#=-*-coding:utf-8-*-
+NAME = "CgroupTest"
+AUTHOR = "CS2C Server OS Test Team"
+TEST_TYPE = "client"
+TEST_CLASS = "Basic"
+TEST_CATEGORY = "Basic"
+TIME = 'MEDIUM'
+
+DOC = """
+The cgroup testsuits of the Server os.
+"""
+
+job.run_test('CgroupTest')

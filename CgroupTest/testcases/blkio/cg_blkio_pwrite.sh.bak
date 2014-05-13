@@ -1,0 +1,35 @@
+#!/bin/bash
+sync && echo 3 > /proc/sys/vm/drop_caches
+testfile01=$0.`head -1 /dev/urandom | cksum | awk '{print $1}'`
+testfile02=$0.`head -1 /dev/urandom | cksum | awk '{print $1}'`
+cgexec -g blkio:/testcg01 dd if=/dev/zero of=/tmp/$testfile01 &
+pid01=$!
+cgexec -g blkio:/testcg02 dd if=/dev/zero of=/tmp/$testfile02 &
+pid02=$!
+trap "kill -9 $pid01;kill -9 $pid02;rm -rf /tmp/$testfile01;rm -rf /tmp/$testfile02" EXIT
+tmp_file=$0.`head -1 /dev/urandom | cksum | awk '{print $1}'`
+iotop -b -n 31 -p $pid01 -p $pid02 >> /tmp/${tmp_file}
+[ -f /tmp/${tmp_file} ] && trap "kill -9 $pid01;kill -9 $pid02;rm -rf /tmp/$testfile01;rm -rf /tmp/$testfile02;rm -rf /tmp/${tmp_file}" EXIT
+
+awk 'BEGIN {
+	sum01=0;
+	sum02=0;
+	count01=0;
+	count02=0;
+} 
+{
+	if ($1 == '"$pid01"')
+	{
+		count01++;
+		sum01+=$6;
+	}
+	if ($1 == '"$pid02"')
+	{
+		count02++;
+		sum02+=$6;
+	}
+}
+END {
+	print "cg01:"sum01/(count01-1)
+	print "cg02:"sum02/(count02-1)
+}' /tmp/${tmp_file}

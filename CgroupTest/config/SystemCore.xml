@@ -1,0 +1,12 @@
+<?xml version="1.0"? Encoding="UTF-8"?>
+
+<!-- File Name: SystemCore.xml -->
+
+<TestRun>
+    <TestCase>
+        <Summary>检查操作系统核心功能是否正确</Summary>
+        <Dir>SystemCore</Dir>
+        <Script>SystemCore_01.sh</Script>
+        <CaseRun>True</CaseRun>
+    </TestCase>
+</TestRun>

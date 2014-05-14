@@ -121,7 +121,7 @@ function RealPwd()
     if [ $# -eq 0 ]
     then
         echo $(cd $(dirname $0); pwd) || \
-        EchoInfo "Get the path fail.";RET=1
+        RET=1
     else
         EchoInfo "There're some mistake about the input parameters. The 'RealPwd' function doesn't need any input parameter."
         RET=1

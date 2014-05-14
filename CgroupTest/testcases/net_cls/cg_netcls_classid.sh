@@ -1,36 +1,33 @@
 #!/bin/bash
 
-source lib/libcgtest.sh
+source lib/settc.sh
+source $SFROOT/lib/common.sh
 
-# Set iostat watch time. The 'TIME_DELAY' must be small than 'WATCH_COUNT'.
-TIME_DELAY=10
-WATCH_DELAY=1
-WATCH_COUNT=61
-if [ ${TIME_DELAY} -ge ${WATCH_COUNT} ]
-then
-    echo "Some mistake in test time setting."
-    exit 1
-fi
+function InitTest()
+{
+    
+    local DEVICE
+    local BANDWIDTH
+    local TEST_SIZE=0
+    
+    # Check for inputs.
+    Usage "${FUNCNAME}" "${FUNCNAME} device[s] bandwidth[s]" $# 2 || return 6 
+    # Set device name and testsize.
+    eval DEVICE=(\${$1[@]})
+    TEST_SIZE=${#DEVICE[@]}
+    # Set bandwidth, then check for the inputs.
+    eval BANDWIDTH=(\${$2[@]})
+    [ ${#BANDWIDTH[@]} -ne ${TEST_SIZE} ] && printf "Input error, please check!\n" && return 6
 
-# Prepare for the test.
-TEST_SIZE=2
+    # TC setup for devices.
+    for i in ${TEST_SIZE}
+    do
+        ! InitDevice ${DEVICE[$i]} ${BANDWIDTH[$i]} && printf "Failure in the test initializing, please check for it!\n" && return 5
 
-# Havn't check for the cgroup setting.
-HIERARCHY=("blkio" "blkio")
-if [ ${#HIERARCHY[@]} -ne ${TEST_SIZE} ]
-then
-    echo "Some mistake in hierarchy setting."
-    exit 1
-fi
+    done
+    return 0
+}
 
-
-# Set test cgroup names.
-CG=("/" "/")
-if [ ${#CG[@]} -ne ${TEST_SIZE} ]
-then
-    echo "Some mistake in control group setting."
-    exit 1
-fi
 
 # Set device.
 DEV=("sda8" "sdb8")

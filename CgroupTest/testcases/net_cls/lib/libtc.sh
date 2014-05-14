@@ -1,5 +1,7 @@
 #! /bin/bash
 
+source $SFROOT/lib/common.sh
+
 function ClearDeviceTcSet()
 {
     Usage "${FUNCNAME}" "${FUNCNAME} deivce_name" $# 1 || return 6
@@ -24,23 +26,8 @@ function SetDeviceTcHtb()
         tc class add dev $1 parent $2 classid $2$3 htb rate $4 || return 1
         tc filter add dev $1 parent $2 protocol ip prio 1 handle $3: cgroup || return 1
         printf "The tc with handle $2$3 set the limits of $1 is $4.\n"
-    fi
-}
-
-function Usage()
-{
-    if [ $# != 4 ]
-    then
-        printf "Usage Error: You should use this function like this: \nUsage function_name command_sample counts_of_cmdline set_counts_value\n"
-        return 2
+        return 0
     else
-        if [ $3 -ne $4 ]
-        then
-            printf "Usage of '%s': %s\n" "$1" "$2"
-            return 1
-        fi
+        return 2
     fi
-    return 0
 }
-
-SetDeviceTcHtb eth0 10: 3 10mbit 

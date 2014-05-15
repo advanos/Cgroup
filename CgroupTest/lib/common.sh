@@ -1,4 +1,4 @@
-# ----------------------------------------------------------------------
+# ------------------------------------------------------------------------
 # Filename:     common.sh
 # Version:      0.1
 # Date:         2014/05/14
@@ -11,11 +11,12 @@
 # History：     
 #               Version 0.1, 2014/05/14
 #               - The first one.
-# ----------------------------------------------------------------------
+# ------------------------------------------------------------------------
 
 #! /bin/bash
 
-##! --------------------------------------------------------------------
+##! ----------------------------------------------------------------------
+##! @FUNCTION:  Usage 
 ##! @VERSION:   0.1 
 ##! @AUTHOR:    Kun He
 ##! @EMAIL:     kun.he@cs2c.com.cn
@@ -41,6 +42,9 @@
 ##! @RETURN:    0 ----- Success
 ##!             1 ----- Failure in the parameters of the target function.
 ##!             2 ----- Failure in the parameters of this function.
+##! @CHANGELOG: Version 0.1, 2014/05/14
+##!             - The first one.
+##! -----------------------------------------------------------------------
 function Usage()
 {
     if [ $# != 4 ] 
@@ -50,7 +54,36 @@ function Usage()
         return 2
     else
         [ $3 -ne $4 ] && printf "Usage of '%s': %s\n" "$1" "$2" && return 1
-        fi  
     fi  
     return 0
+}
+
+##! ----------------------------------------------------------------------
+##! @FUNCTION:  TrapInsert
+##! @VERSION:   0.1 
+##! @AUTHOR:    Kun He
+##! @EMAIL:     kun.he@cs2c.com.cn
+##! @TODO:      Insert newer command to the old one for trap to calling
+##!             while signal 'EXIT'.
+##! @USAGE:     TrapInsert old_command new_command
+##! @PARA_1:    string  old_command
+##!             TYPE:   input
+##!             VALUE:  The old command line of trap.
+##! @PARA_2:    string  new_command
+##!             TYPE:   input
+##!             VALUE:  The new command which is to be inserted.
+##! @OUT:       SUCCESS:The combined command.
+##!             FAILURE:Error information.
+##! @RETURN:    0 ----- Success
+##!             1 ----- Echo faild.
+##!             6 ----- Failure in the parameters of this function.
+##! @CHANGELOG: Version 0.1, 2014/05/15
+##!             - The first one.
+##! -----------------------------------------------------------------------
+function TrapInsert()
+{
+    Usage "${FUNCNAME}" "${FUNNAME} old_command new_command" $# 2 || \
+    return 6
+    
+    echo "$2; $1" && return 0 || return 1
 }

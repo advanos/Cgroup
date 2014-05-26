@@ -82,8 +82,39 @@ function Usage()
 ##! -----------------------------------------------------------------------
 function TrapInsert()
 {
-    Usage "${FUNCNAME}" "${FUNNAME} old_command new_command" $# 2 || \
+    Usage "${FUNCNAME}" "${FUNCNAME} old_command new_command" $# 2 || \
     return 6
     
+    echo "$2; $1" && return 0 || return 1
+}
+
+##! ----------------------------------------------------------------------
+##! @FUNCTION:  GetStrRtn
+##! @VERSION:   0.1 
+##! @AUTHOR:    Kun He
+##! @EMAIL:     kun.he@cs2c.com.cn
+##! @TODO:      When a function's output is a string, first judge the 
+##!             return value, if success then print the output, else print
+##!             noting, but return error.
+##! @USAGE:     TrapInsert old_command new_command
+##! @PARA_1:    string  old_command
+##!             TYPE:   input
+##!             VALUE:  The old command line of trap.
+##! @PARA_2:    string  new_command
+##!             TYPE:   input
+##!             VALUE:  The new command which is to be inserted.
+##! @OUT:       SUCCESS:The combined command.
+##!             FAILURE:Error information.
+##! @RETURN:    0 ----- Success
+##!             1 ----- Echo faild.
+##!             6 ----- Failure in the parameters of this function.
+##! @CHANGELOG: Version 0.1, 2014/05/15
+##!             - The first one.
+##! -----------------------------------------------------------------------
+function TrapInsert()
+{
+    Usage "${FUNCNAME}" "${FUNCNAME} old_command new_command" $# 2 || \
+    return 6
+     
     echo "$2; $1" && return 0 || return 1
 }

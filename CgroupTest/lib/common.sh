@@ -98,23 +98,32 @@ function TrapInsert()
 ##!             noting, but return error.
 ##! @USAGE:     TrapInsert old_command new_command
 ##! @PARA_1:    string  old_command
-##!             TYPE:   input
-##!             VALUE:  The old command line of trap.
+##!             TYPE:   input & output
+##!             VALUE:  When it's property is 'input', it presents the 
+##!                     parameter's symbol of the old command line to
+##!                     trap; when it's property is 'output', it presents
+##!                     the combined command line's symbol.
 ##! @PARA_2:    string  new_command
 ##!             TYPE:   input
 ##!             VALUE:  The new command which is to be inserted.
 ##! @OUT:       SUCCESS:The combined command.
 ##!             FAILURE:Error information.
 ##! @RETURN:    0 ----- Success
-##!             1 ----- Echo faild.
+##!             1 ----- Eval faild.
 ##!             6 ----- Failure in the parameters of this function.
 ##! @CHANGELOG: Version 0.1, 2014/05/15
 ##!             - The first one.
+##!             Version 0.2, 2014/05/26
+##!             - Use the first parameter's indirect expansion instead of 
+##!               command 'echo' to output the value string. When the 
+##!               function faild, the origin value of the first paremeter 
+##!               can be keeped.
 ##! -----------------------------------------------------------------------
 function TrapInsert()
 {
     Usage "${FUNCNAME}" "${FUNCNAME} old_command new_command" $# 2 || \
     return 6
-     
-    echo "$2; $1" && return 0 || return 1
+    
+    local NEW="$2;${!1}"
+    eval $1='${NEW}' && return 0 || return 1
 }

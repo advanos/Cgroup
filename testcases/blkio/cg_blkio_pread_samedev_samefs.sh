@@ -64,3 +64,4 @@ END {
 	printf("%-16s%f KB/s\n", cg01, (sum01)/(count01-1));
 	printf("%-16s%f KB/s\n", cg02, (sum02)/(count02-1));
 }' /tmp/${tmp_file}
+

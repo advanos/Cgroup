@@ -87,7 +87,7 @@ function UnmountDir()
             MOUNT_COUNT=$(mount | awk -v mount="$INPUT_DIR" '{if($3==mount){print "found mounted!"}}' | wc -l)
             if [ ${MOUNT_COUNT} -gt 0 ]
             then
-                umount $INPUT_DIR 
+                umount -d $INPUT_DIR 
                 if [ $? -eq 0 ] 
 		then
 		    EchoInfo "The filesystem unmounted successfully."
@@ -121,7 +121,7 @@ function RealPwd()
     if [ $# -eq 0 ]
     then
         echo $(cd $(dirname $0); pwd) || \
-        RET=1
+        EchoInfo "Get the path fail.";RET=1
     else
         EchoInfo "There're some mistake about the input parameters. The 'RealPwd' function doesn't need any input parameter."
         RET=1

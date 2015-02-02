@@ -1,6 +1,12 @@
 #!/bin/bash
 # Prepare for the test.
-# Havn't check for the cgroup setting.
+# Check for the cgroup setting.
+source ${SFROOT}/lib/Trap.sh
+source ${SFROOT}/lib/FileOps.sh
+source $(RealPwd)/lib/libcgtest.sh
+
+KeepStatus
+
 # Flush all filesystem buffer and free pagecache, dentries and inodes.
 sync && echo 3 > /proc/sys/vm/drop_caches
 sleep 5

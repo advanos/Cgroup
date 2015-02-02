@@ -1,4 +1,5 @@
 #!/bin/bash
+source ${SFROOT}/lib/Trap.sh
 
 function StartProcessFromCg()
 {
@@ -59,4 +60,14 @@ function GetCfsFromToplog()
     awk '
     {
     }' "${TOP_LOG}"
+}
+
+function KeepStatus()
+{
+    service cgconfig status > /dev/null 2>&1
+    if [ $? -eq 0 ] 
+    then
+        service cgconfig stop > /dev/null 2>&1 && \
+        TrapAdd "service cgconfig start > /dev/null 2>&1"
+    fi
 }

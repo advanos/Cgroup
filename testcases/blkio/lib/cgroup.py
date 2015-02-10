@@ -7,6 +7,12 @@ class Cgroup:
         self.mounts = os.path.abspath('/proc/mounts')
         self.root = os.path.abspath('/cgroup')
         self.name = name
+        self.type = ''
+        self.subsystem = []
+        self.hierarchy = ''
+        self.parent = self
+        self.path = ''
+        self.rootpath = ''
         if subsystem == '':
             if isinstance(parent, Cgroup):
                 self.type = 'sub_cgroup'
@@ -17,7 +23,7 @@ class Cgroup:
                 self.rootpath = parent.rootpath
             else :
                 print("The second parameter should be instance of 'Cgroup'!")
-                return -1
+                return None
         else :
             if isinstance(subsystem, list):
                 self.type = 'root_cgroup'
@@ -32,7 +38,16 @@ class Cgroup:
 
     def create(self):
         if self.type == 'sub_cgroup':
-            os.system('mkdir -p ' + self.path)
+            if self.is_cgroup_exist():
+                print("The sub-cgroup '%s' of '%s' already exists." % (self.name, self.parent.name))
+                return -1
+            else :
+                pass
+            if not self.is_parent_exist():
+                print("The parent cgroup of '%s' does not exist." % self.name)
+                return -1
+            else :
+                os.system('mkdir -p ' + self.path)
         else :
             self.create_hierarchy()
 
@@ -129,3 +144,23 @@ class Cgroup:
                 else :
                     pass
             return True
+
+    def is_cgroup_exist(self):
+        if os.path.exists(self.path):
+            if 'cgroup.procs' in os.listdir(self.path):
+                return True
+            else :
+                print("The '%s' dir exist, but it's not a cgroup." % self.path)
+                return False
+        else :
+            print("The '%s' does not exist." % self.path)
+            return False
+
+    def is_parent_exist(self):
+        if self.type == 'root_cgroup':
+            return self.is_hierarchy_exist(self.hierarchy, self.subsystem, self.path)
+        elif self.type == 'sub_cgroup':
+            return self.parent.is_cgroup_exist()
+        else :
+            print("Cgroup type error.")
+            return False

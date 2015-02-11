@@ -56,10 +56,21 @@ class Cgroup:
             for file in os.listdir(self.path):
                 if os.path.isdir(file):
                     self.rrm(file)
-                else : pass
+                else : 
+                    pass
             self.delete_hierarchy()
-        else :
+        elif self.type == 'sub_cgroup':
             self.rrm(self.path)
+        else:
+            pass
+    
+    def rrm(self, path):
+        if os.path.isdir(path):
+            for file in os.listdir(path):
+                self.rrm(file)
+            os.rmdir(path)
+        else :
+            pass
 
     def create_hierarchy(self):
         if not self.is_hierarchy_creatable():
@@ -81,6 +92,7 @@ class Cgroup:
 
     def delete_hierarchy(self):
         os.system('umount -d ' + os.path.join(self.root, self.hierarchy))
+        os.rmdir(os.path.join(self.root, self.hierarchy))
     
 
     def is_hierarchy_exist(self, name, subsystem, path):
@@ -97,8 +109,12 @@ class Cgroup:
 
     def is_hname_used(self, name):
         if os.path.isdir(os.path.join(self.root, name)):
-            print("The hierarchy '%s' already exist!" % name)
-            return True
+            if len(os.listdir(os.path.join(self.root, name))) == 0:
+                #print("The path '%s' already exist, but it's empty." % os.path.join(self.root, name))
+                return False
+            else :
+                print("The hierarchy '%s' already exist!" % name)
+                return True
         elif os.path.exists(os.path.join(self.root, name)):
             print("The path '%s' already exist!" % os.path.join(self.root, name))
             return True
